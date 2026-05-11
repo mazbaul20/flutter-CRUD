@@ -26,6 +26,25 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
     });
   }
 
+  FormOnSubmit(){
+    if(FormValues['ProductName']!.length==0){
+      ErrorToast("Product Name Required!");
+    }
+    else if(FormValues['ProductCode']!.length==0){
+      ErrorToast("Product Code Required!");
+    }else if(FormValues['Img']!.length==0){
+      ErrorToast("Image Link Required!");
+    }else if(FormValues['UnitPrice']!.length==0){
+      ErrorToast("Unit Price Required!");
+    }else if(FormValues['TotalPrice']!.length==0){
+      ErrorToast("Total Price Required!");
+    }else if(FormValues['Qty']!.length==0){
+      ErrorToast("Quantity Required!");
+    }else{
+      //data save
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +121,9 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
                   SizedBox(height: 20,),
 
                   ElevatedButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      FormOnSubmit();
+                    },
                     style: AppButtonStyle(),
                     child: SuccessButtonStyle('Submit'),
                     // child: Text('Create Product'),
