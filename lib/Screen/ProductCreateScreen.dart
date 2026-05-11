@@ -11,6 +11,21 @@ class ProductCreateScreen extends StatefulWidget{
 }
 
 class _ProductCreateScreenState extends State<ProductCreateScreen>{
+  Map<String, dynamic> FormValues = {
+    "Img":"",
+    "ProductCode":"",
+    "ProductName":"",
+    "Qty":"",
+    "TotalPrice":"",
+    "UnitPrice":""
+  };
+
+  InputOnChange(MapKey, TextValue){
+    setState(() {
+      FormValues.update(MapKey, (value)=>TextValue);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,33 +39,43 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
               child: Column(
                 children: [
                   TextFormField(
-                    onChanged: (value){},
+                    onChanged: (TextValue){
+                      InputOnChange("ProductName", TextValue);
+                    },
                     decoration: AppInputDecoration('Product Name'),
                   ),
                   SizedBox(height: 20,),
                   TextFormField(
-                    onChanged: (value){},
+                    onChanged: (TextValue){
+                      InputOnChange("ProductCode", TextValue);
+                    },
                     decoration: AppInputDecoration('Product Code'),
                   ),
 
                   SizedBox(height: 20,),
 
                   TextFormField(
-                    onChanged: (value){},
+                    onChanged: (TextValue){
+                      InputOnChange("Img", TextValue);
+                    },
                     decoration: AppInputDecoration('Product Image'),
                   ),
 
                   SizedBox(height: 20,),
 
                   TextFormField(
-                    onChanged: (value){},
+                    onChanged: (TextValue){
+                      InputOnChange("UnitPrice", TextValue);
+                    },
                     decoration: AppInputDecoration('Unit price'),
                   ),
 
                   SizedBox(height: 20,),
 
                   TextFormField(
-                    onChanged: (value){},
+                    onChanged: (TextValue){
+                      InputOnChange("TotalPrice", TextValue);
+                    },
                     decoration: AppInputDecoration('Total price'),
                   ),
 
@@ -58,7 +83,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
 
                   AppDropDownStyle(
                     DropdownButton(
-                        value: '2 pcs',
+                        value: FormValues['Qty'],
                         items: [
                           DropdownMenuItem(value: '', child: Text('Select Qt')),
                           DropdownMenuItem(value: '1 pcs', child: Text('1 pcs')),
@@ -66,11 +91,14 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
                           DropdownMenuItem(value: '3 pcs', child: Text('3 pcs')),
                           DropdownMenuItem(value: '4 pcs', child: Text('4 pcs')),
                         ],
-                        onChanged: (value){},
+                        onChanged: (TextValue){
+                          InputOnChange("Qty", TextValue);
+                        },
                         underline: Container(),
                         isExpanded: true,
                     ),
                   ),
+
                   SizedBox(height: 20,),
 
                   ElevatedButton(
