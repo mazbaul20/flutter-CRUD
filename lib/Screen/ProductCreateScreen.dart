@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../Style/Style.dart';
+import '../RestAPI/RestClient.dart';
 
 class ProductCreateScreen extends StatefulWidget{
   @override
@@ -11,6 +12,7 @@ class ProductCreateScreen extends StatefulWidget{
 }
 
 class _ProductCreateScreenState extends State<ProductCreateScreen>{
+  bool Loading = false;
   Map<String, dynamic> FormValues = {
     "Img":"",
     "ProductCode":"",
@@ -26,11 +28,10 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
     });
   }
 
-  FormOnSubmit(){
+  FormOnSubmit() async{
     if(FormValues['ProductName']!.length==0){
       ErrorToast("Product Name Required!");
-    }
-    else if(FormValues['ProductCode']!.length==0){
+    }else if(FormValues['ProductCode']!.length==0){
       ErrorToast("Product Code Required!");
     }else if(FormValues['Img']!.length==0){
       ErrorToast("Image Link Required!");
@@ -41,7 +42,12 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
     }else if(FormValues['Qty']!.length==0){
       ErrorToast("Quantity Required!");
     }else{
-      //data save
+      setState(() { Loading = true; });
+      // await Future.delayed(Duration(seconds: 2));
+      await ProductCreateRequest(FormValues);
+      if (mounted) {
+        setState(() { Loading = false; });
+      }
     }
   }
 
@@ -53,7 +59,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
         children: [
           ScreenBackground(context),
           Container(
-            child: (SingleChildScrollView(
+            child: Loading?(Center(child: CircularProgressIndicator(),)):((SingleChildScrollView(
               padding: EdgeInsets.all(20),
               child: Column(
                 children: [
@@ -102,19 +108,19 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
 
                   AppDropDownStyle(
                     DropdownButton(
-                        value: FormValues['Qty'],
-                        items: [
-                          DropdownMenuItem(value: '', child: Text('Select Qt')),
-                          DropdownMenuItem(value: '1 pcs', child: Text('1 pcs')),
-                          DropdownMenuItem(value: '2 pcs', child: Text('2 pcs')),
-                          DropdownMenuItem(value: '3 pcs', child: Text('3 pcs')),
-                          DropdownMenuItem(value: '4 pcs', child: Text('4 pcs')),
-                        ],
-                        onChanged: (TextValue){
-                          InputOnChange("Qty", TextValue);
-                        },
-                        underline: Container(),
-                        isExpanded: true,
+                      value: FormValues['Qty'],
+                      items: [
+                        DropdownMenuItem(value: '', child: Text('Select Qt')),
+                        DropdownMenuItem(value: '1 pcs', child: Text('1 pcs')),
+                        DropdownMenuItem(value: '2 pcs', child: Text('2 pcs')),
+                        DropdownMenuItem(value: '3 pcs', child: Text('3 pcs')),
+                        DropdownMenuItem(value: '4 pcs', child: Text('4 pcs')),
+                      ],
+                      onChanged: (TextValue){
+                        InputOnChange("Qty", TextValue);
+                      },
+                      underline: Container(),
+                      isExpanded: true,
                     ),
                   ),
 
@@ -131,7 +137,7 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
 
                 ],
               ),
-            )),
+            ))),
           )
         ],
       ),
