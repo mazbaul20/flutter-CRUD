@@ -65,3 +65,26 @@ Future<bool> ProductDeleteRequest(id) async {
     return false;
   }
 }
+
+Future<bool> ProductUpdateRequest(FormValues) async {
+
+  var URL = Uri.parse("http://10.0.2.2:8000/api/v1/products/${FormValues['_id']}");
+
+  var PostBody = json.encode(FormValues);
+  var PostHeader = {
+    'Content-Type': 'application/json',
+    "Accept": "application/json",
+  };
+
+  var response = await http.put(URL, headers: PostHeader, body: PostBody);
+  var ResultCode = response.statusCode;
+  var ResultBody = json.decode(response.body);
+
+  if (ResultCode == 200 && ResultBody['status'] == 'success') {
+    SuccessToast("Product Updated Successfully");
+    return true;
+  } else {
+    ErrorToast("Request fail ! try again");
+    return false;
+  }
+}

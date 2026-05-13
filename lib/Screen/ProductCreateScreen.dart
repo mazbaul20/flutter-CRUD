@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../Style/Style.dart';
 import '../RestAPI/RestClient.dart';
+import 'ProductGridViewScreen.dart';
 
 class ProductCreateScreen extends StatefulWidget{
   @override
@@ -45,9 +46,10 @@ class _ProductCreateScreenState extends State<ProductCreateScreen>{
       setState(() { Loading = true; });
       // await Future.delayed(Duration(seconds: 2));
       await ProductCreateRequest(FormValues);
-      if (mounted) {
-        setState(() { Loading = false; });
-      }
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context)=>ProductGridViewScreen()),
+          (Route route)=>false,
+      );
     }
   }
 

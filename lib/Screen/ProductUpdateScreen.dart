@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../Style/Style.dart';
 import '../RestAPI/RestClient.dart';
+import 'ProductGridViewScreen.dart';
 
 class ProductUpdateScreen extends StatefulWidget {
   final Map<String, dynamic> productItem;
@@ -20,7 +21,8 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
     "ProductName":"",
     "Qty":"",
     "TotalPrice":"",
-    "UnitPrice":""
+    "UnitPrice":"",
+    "_id":""
   };
 
   @override
@@ -33,6 +35,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
       FormValues.update('Qty', (value)=>widget.productItem['Qty']);
       FormValues.update('TotalPrice', (value)=>widget.productItem['TotalPrice']);
       FormValues.update('UnitPrice', (value)=>widget.productItem['UnitPrice']);
+      FormValues.update('_id', (value)=>widget.productItem['_id']);
     });
   }
 
@@ -58,10 +61,12 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
     }else{
       setState(() { Loading = true; });
       // await Future.delayed(Duration(seconds: 2));
-      await ProductCreateRequest(FormValues);
-      if (mounted) {
-        setState(() { Loading = false; });
-      }
+      await ProductUpdateRequest(FormValues);
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (builder)=>ProductGridViewScreen()),
+        (Route route)=>false,
+      );
     }
   }
 
