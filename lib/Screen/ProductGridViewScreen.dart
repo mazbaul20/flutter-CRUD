@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../RestAPI/RestClient.dart';
 import '../Style/Style.dart';
+import 'ProductCreateScreen.dart';
 
 class ProductGridViewScreen extends StatefulWidget {
   const ProductGridViewScreen({super.key});
@@ -93,7 +94,7 @@ class _ProductGridViewScreenState extends State<ProductGridViewScreen> {
                                   children: [
                                     Text(ProductList[index]['ProductName']),
                                     SizedBox(height: 10),
-                                    Text("Price: "+ProductList[index]['UnitPrice'] +" BDT"),
+                                    Text("Price: "+ProductList[index]['UnitPrice']+" BDT"),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -128,6 +129,11 @@ class _ProductGridViewScreenState extends State<ProductGridViewScreen> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (builder){
+          return ProductCreateScreen();
+        }));
+      },child: Icon(Icons.add),),
     );
   }
 }
