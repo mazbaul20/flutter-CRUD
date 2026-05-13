@@ -4,7 +4,8 @@ import '../Style/Style.dart';
 import '../RestAPI/RestClient.dart';
 
 class ProductUpdateScreen extends StatefulWidget {
-  const ProductUpdateScreen({super.key});
+  final Map<String, dynamic> productItem;
+  const ProductUpdateScreen(this.productItem);
 
   @override
   State<ProductUpdateScreen> createState() => _ProductUpdateScreenState();
@@ -21,6 +22,19 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
     "TotalPrice":"",
     "UnitPrice":""
   };
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      FormValues.update('Img', (value)=>widget.productItem['Img']);
+      FormValues.update('ProductCode', (value)=>widget.productItem['ProductCode']);
+      FormValues.update('ProductName', (value)=>widget.productItem['ProductName']);
+      FormValues.update('Qty', (value)=>widget.productItem['Qty']);
+      FormValues.update('TotalPrice', (value)=>widget.productItem['TotalPrice']);
+      FormValues.update('UnitPrice', (value)=>widget.productItem['UnitPrice']);
+    });
+  }
 
   InputOnChange(MapKey, TextValue){
     setState(() {
@@ -54,7 +68,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Create Product"),),
+      appBar: AppBar(title: Text("Update Product"),),
       body: Stack(
         children: [
           ScreenBackground(context),
@@ -64,6 +78,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
               child: Column(
                 children: [
                   TextFormField(
+                    initialValue: FormValues['ProductName'],
                     onChanged: (TextValue){
                       InputOnChange("ProductName", TextValue);
                     },
@@ -71,6 +86,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                   ),
                   SizedBox(height: 20,),
                   TextFormField(
+                    initialValue: FormValues['ProductCode'],
                     onChanged: (TextValue){
                       InputOnChange("ProductCode", TextValue);
                     },
@@ -80,6 +96,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                   SizedBox(height: 20,),
 
                   TextFormField(
+                    initialValue: FormValues['Img'],
                     onChanged: (TextValue){
                       InputOnChange("Img", TextValue);
                     },
@@ -89,6 +106,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                   SizedBox(height: 20,),
 
                   TextFormField(
+                    initialValue: FormValues['UnitPrice'],
                     onChanged: (TextValue){
                       InputOnChange("UnitPrice", TextValue);
                     },
@@ -98,6 +116,7 @@ class _ProductUpdateScreenState extends State<ProductUpdateScreen> {
                   SizedBox(height: 20,),
 
                   TextFormField(
+                    initialValue: FormValues['TotalPrice'],
                     onChanged: (TextValue){
                       InputOnChange("TotalPrice", TextValue);
                     },
